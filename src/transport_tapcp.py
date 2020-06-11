@@ -284,7 +284,7 @@ class TapcpTransport(Transport):
 
         return head_loc, prog_loc
 
-    def upload_to_ram_and_program(self, filename, port=None, timeout=None, wait_complete=True, force=False):
+    def upload_to_ram_and_program(self, filename, port=None, timeout=None, wait_complete=True, force=False, **kwargs):
         if self.platform == "snap":
             USER_FLASH_LOC = 0x800000
         elif self.platform == "snap2":
