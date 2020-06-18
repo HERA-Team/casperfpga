@@ -116,8 +116,6 @@ class Gbe(object):
         :param mac: String or Integer input, MAC address (e.g. '02:00:00:00:00:01')
         :param ipaddress: String or Integer input, IP address (eg '10.0.0.1')
         :param port: String or Integer input
-        :param gateway: String or Integer input, an IP address
-        :param subnet_mask: string or integer, subnet mask (e.g. '255.255.255.0')
         """
         raise NotImplementedError('This is no longer required as the mac, '
                                   'ip_address and port are no longer stored '

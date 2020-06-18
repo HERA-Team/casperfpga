@@ -9,6 +9,7 @@ URL = 'https://github.com/casper-astro/casperfpga'
 AUTHOR = 'Tyrone van Balla'
 EMAIL = 'tvanballa at ska.ac.za'
 
+
 here = os.path.abspath(os.path.dirname(__file__))
 
 try:
