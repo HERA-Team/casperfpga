@@ -105,7 +105,7 @@ class RedisTftp(object):
         Returns:
             correlator response to this command
         """
-        message = json.dumps({"command":command, "time":time.time()})
+        message = json.dumps({"command":command.decode("utf-8"), "time":time.time()})
         listeners = self.r.publish(REDIS_COMMAND_CHANNEL, message)
         if listeners == 0:
             self._logger.error("Sent command %s but no-one is listening!" % command)
@@ -141,7 +141,7 @@ class RedisTftp(object):
                 raise RuntimeError("Timed out waiting for a correlator response")
                 return
             try:
-                message = json.loads(message["data"])   
+                message = json.loads(message["data"].decode("utf-8"))   
             except:
                 self._logger.error("Got a non-JSON message on the correlator response channel")
                 raise RuntimeError("Got a non-JSON message on the correlator response channel")
