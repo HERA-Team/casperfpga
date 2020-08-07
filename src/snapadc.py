@@ -177,6 +177,23 @@ class SNAPADC(object):
         elif type(self.adc) is HMCAD1520:
             self.adc.setOperatingMode(numChannel,1,lowClkFreq,self.RESOLUTION)
 
+        # Add a reprogram of the FPGA fabric
+        self.logger.debug('Reprogramming the FPGA for ADCs')
+        self.interface.transport.prog_user_image()
+        self.selectADC()
+        time.sleep(0.5)
+        self.logger.debug('Reprogrammed')
+
+        # Select the clock source switch again. The reprogramming 
+        # seems to lose this information
+        self.logger.debug('Configuring clock source switch')
+        if self.lmx is not None:
+            self.clksw.setSwitch('a')
+        else:
+            self.clksw.setSwitch('b')
+
+        time.sleep(0.5)
+
         self.setDemux(numChannel=1) # calibrate in full interleave mode
 
         self.logger.debug('Check if MMCM locked')
