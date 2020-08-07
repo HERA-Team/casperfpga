@@ -50,6 +50,7 @@ class SNAPADC(object):
         self.curDelay = None
         
         # interface => casperfpga.CasperFpga(hostname/ip)
+        self.interface = interface
 
         self.A_WB_R_LIST = [self.WB_DICT.index(a) for a in self.WB_DICT if a != None]
         self.adcList = [0, 1, 2]
