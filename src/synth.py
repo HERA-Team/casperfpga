@@ -182,16 +182,6 @@ class LMX2581(WishBoneDevice):
     def powerOff(self):
         self.setWord(1, "PWDN_MODE")
 
-    def initialize(self, verify=False):
-        """
-        Seem to have to do this if reference
-        was not present when board was powered up(?)
-        """
-        #Ed. This seems to break things?
-        #self.powerOff()
-        #self.powerOn()
-        pass
-
     def getFreq(self):
         """
         Infer the output sample clock from the configuration of
