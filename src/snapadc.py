@@ -1,4 +1,4 @@
-from synth import *
+from synth import LMX2581
 from adc import *
 from clockswitch import *
 from wishbonedevice import WishBoneDevice
@@ -87,10 +87,10 @@ class SNAPADC(object):
             self.RESOLUTION = resolution
         self.curDelay = np.zeros((len(self.adcList),len(self.laneList)))
 
-        if ref is not None:
-            self.lmx = LMX2581(host,'lmx_ctrl', fosc=ref)
-        else:
-            self.lmx = None
+        #if ref is not None:
+        #    self.lmx = LMX2581(host,'lmx_ctrl', fosc=ref)
+        #else:
+        #    self.lmx = None
 
         self.clksw = HMC922(host,'adc16_use_synth')
         self.ram = [WishBoneDevice(host,name) for name in self.ramList]
@@ -112,7 +112,7 @@ class SNAPADC(object):
 
         # below is from hera_corr_f/blocks.py
         # Attach our own wrapping of LMX
-        self.lmx = Synth(host, 'lmx_ctrl', fosc=ref)
+        self.lmx = LMX2581(host, 'lmx_ctrl', fosc=ref)
         self.name            = 'SNAP_adc'
         self.clock_divide    = 1
         self.resolution      = resolution

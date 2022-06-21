@@ -129,12 +129,14 @@ class LMX2581(WishBoneDevice):
 	# http://www.ti.com/lit/ds/symlink/lmx2581.pdf
 	# Also borrow some lines from https://github.com/domagalski/snap-synth
 
-	def __init__(self, interface, controller_name, fosc=10):
+	def __init__(self, interface, controller_name, fosc=10, logger=None):
+        self.logger = logger
 		super(LMX2581, self).__init__(interface, controller_name) 
 		# A non-None address list
 		self.A_DICT_LIST = [self.DICTS.index(a) for a in self.DICTS if a != None]
 		self.FOSC = fosc 		# 10 MHz from GPS module
 		self.freq_pd = self.FOSC / 1
+        self.host = host
 
 	def init(self):
 
@@ -179,6 +181,31 @@ class LMX2581(WishBoneDevice):
 
 	def powerOff(self):
 		self.setWord(1, "PWDN_MODE")
+
+    def initialize(self, verify=False):
+        """
+        Seem to have to do this if reference
+        was not present when board was powered up(?)
+        """
+        #Ed. This seems to break things?
+        #self.powerOff()
+        #self.powerOn()
+        pass
+
+    def getFreq(self):
+        """
+        Infer the output sample clock from the configuration of
+        the LMX registers.
+        """
+        VCO_DIV = self.getWord('VCO_DIV')
+        VCO_DIV = 2 * (VCO_DIV + 1)
+        PLL_NUM_H = self.getWord('PLL_NUM_H')
+        PLL_NUM_L = self.getWord('PLL_NUM_L')
+        PLL_N = self.getWord('PLL_N')
+        PLL_DEN = self.getWord('PLL_DEN')
+        PLL_NUM = (PLL_NUM_H & 0b1111111111) << 12
+        PLL_NUM += PLL_NUM_L & 0b111111111111
+        return self.FOSC * (PLL_N + PLL_NUM / PLL_DEN) / VCO_DIV
 
 	def outputPower(self,p=15):
 		self.setWord(p, "OUTA_PWR")
@@ -390,34 +417,3 @@ class LMX2581(WishBoneDevice):
 		else:
 			self.logger.error('LMX2581 not locked')
 			return False
-
-class Synth(LMX2581):
-    def __init__(self, host, name, fosc=10, logger=None):
-        self.logger = logger
-        super(Synth, self).__init__(host, name, fosc=fosc)
-        self.host = host
-
-    def initialize(self, verify=False):
-        """
-        Seem to have to do this if reference
-        was not present when board was powered up(?)
-        """
-        #Ed. This seems to break things?
-        #self.powerOff()
-        #self.powerOn()
-        pass
-
-    def getFreq(self):
-        """
-        Infer the output sample clock from the configuration of
-        the LMX registers.
-        """
-        VCO_DIV = self.getWord('VCO_DIV')
-        VCO_DIV = 2 * (VCO_DIV + 1)
-        PLL_NUM_H = self.getWord('PLL_NUM_H')
-        PLL_NUM_L = self.getWord('PLL_NUM_L')
-        PLL_N = self.getWord('PLL_N')
-        PLL_DEN = self.getWord('PLL_DEN')
-        PLL_NUM = (PLL_NUM_H & 0b1111111111) << 12
-        PLL_NUM += PLL_NUM_L & 0b111111111111
-        return self.FOSC * (PLL_N + PLL_NUM / PLL_DEN) / VCO_DIV
