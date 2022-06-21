@@ -17,6 +17,16 @@ from sbram import Sbram
 from snap import Snap
 from tengbe import TenGbe
 
+# Versioning info
+try:
+    from __version__ import __version__
+    from __branch__ import __branch__
+    from __gitlog__ import __gitlog__
+except ImportError:
+    __gitlog__ = None
+    __branch__ = None
+    __version__ = None
+
 # BEGIN VERSION CHECK
 # Get package version when locally imported from repo or via -e develop install
 try:
