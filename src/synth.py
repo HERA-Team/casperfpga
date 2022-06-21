@@ -136,7 +136,7 @@ class LMX2581(WishBoneDevice):
         self.A_DICT_LIST = [self.DICTS.index(a) for a in self.DICTS if a != None]
         self.FOSC = fosc         # 10 MHz from GPS module
         self.freq_pd = self.FOSC / 1
-        self.host = host
+        self.host = interface
 
     def init(self):
 
