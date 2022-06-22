@@ -38,6 +38,7 @@ setup(
         'numpy',
         'odict',
     ],
+    extras_require = {'test': ['pytest', 'pytest-datadir']},
     provides=['casperfpga'],
     packages=['casperfpga'],  # , 'casperfpga.test'],
     package_dir={'casperfpga': 'src'},
