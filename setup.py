@@ -38,6 +38,7 @@ setup(
         'numpy',
         'odict',
         'tftpy==0.6.2',
+        'redis',
     ],
     extras_require = {'test': ['pytest', 'pytest-datadir']},
     provides=['casperfpga'],
