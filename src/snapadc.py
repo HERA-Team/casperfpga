@@ -1,10 +1,13 @@
-from synth import LMX2581
-from adc import *
-from clockswitch import *
-from wishbonedevice import WishBoneDevice
+from __future__ import print_function
+from __version__ import __version__
+from .synth import LMX2581
+from .adc import *
+from .clockswitch import *
+from .wishbonedevice import WishBoneDevice
 import logging
 import numpy as np
 import time
+print(__version__)
 
 # There are so many I2C warnings that a new level is defined
 # to filter them out
