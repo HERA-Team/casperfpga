@@ -37,7 +37,7 @@ setup(
         'katcp',
         'numpy',
         'odict',
-        'tftpy',
+        'tftpy==0.6.2',
     ],
     extras_require = {'test': ['pytest', 'pytest-datadir']},
     provides=['casperfpga'],
