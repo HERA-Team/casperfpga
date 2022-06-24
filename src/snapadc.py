@@ -7,6 +7,7 @@ from .wishbonedevice import WishBoneDevice
 import logging
 import numpy as np
 import time
+import random
 print(__version__)
 
 # There are so many I2C warnings that a new level is defined
