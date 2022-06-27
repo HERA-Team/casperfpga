@@ -7,8 +7,8 @@ def test_parse_example00(shared_datadir):
     Test to ensure the data from snap_500.fpg is properly parsed.
 
     This function ensures that the two outputs of utils.parse_fpg are dictionary-like
-    and return the expected meta and memory dictionary keys produced in python2.7, 
-    in addition to verifying an expected value of one of the meta dictionary keys.
+    and return the expected meta and memory dictionary keys produced in python2.7. 
+    A value from these sets is then verified.
 
     Parameters
     ----------
@@ -71,8 +71,8 @@ def test_parse_example01(shared_datadir):
     Test to ensure the data from snap_fengine.fpg is properly parsed.
 
     This function ensures that the two outputs of utils.parse_fpg are dictionary-like
-    and return the expected meta and memory dictionary keys produced in python2.7, 
-    in addition to verifying an expected value of one of the meta dictionary keys.
+    and return the expected meta and memory dictionary keys produced in python2.7. 
+    A value from these sets is then verified.
 
     Parameters
     ----------
