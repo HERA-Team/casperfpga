@@ -193,6 +193,15 @@ class HMCAD1511(WishBoneDevice):
     def _bitCtrl(self, state, sda=0):   
         # state: 0 - idle, 1 - start, 2 - transmit, 3 - stop
         if state == self.STATE_3WIRE_START:
+            # Drive clock low, data low, CS lines low.
+            cmd = 0
+            self._write(cmd, self.A_WB_W_3WIRE)
+            # Drive clock high, data low, CS lines low.  This eliminates the
+            # possibility of the ADCs seeing a rising clock edge when asserting
+            # the CS lines due to a race condition.
+            cmd = (1 * self.M_ADC_SCL)
+            self._write(cmd, self.A_WB_W_3WIRE)
+            # Keep clock high, set data as requested, set CS lines as desired
             cmd = (1 * self.M_ADC_SCL) | (sda * self.M_ADC_SDA) | self.cs
             self._write(cmd, self.A_WB_W_3WIRE)
         elif state == self.STATE_3WIRE_TRANS:
